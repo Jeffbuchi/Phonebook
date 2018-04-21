@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ADDRESS BOOK</title>
+	<style type="text/css">
+	body{background-color: #cddc39; text-align: center;font-family: Tahoma; font-weight: bold;}
+		.contact{
+			border:1px solid black;
+			margin:0;
+			padding: 5px;
+			background-color: white;
+			cursor: pointer;
+			height:30px;
+			text-align: left;
+		}
+		.details{
+			margin:0;
+			padding: 5px;
+		}
+		form p{
+			padding: 5px;
+			height:30px;
+			text-align: left;
+		}
+		form input{
+			width: 300px; 
+			height:30px; 
+			border-radius: 5px;
+			font-size: 20px; 
+			margin-right:0;
+		}
+	div{width: 700px; margin:auto;}
+</style>
+</head>
+<body>
+	<div id="contactDisplay" style="text-align: left; height: 120px; border-radius:5px; background-color: orange; margin-bottom: 10px;">
+		<img src="image1.png" style="height: 120px; margin:0 10px 0 3px; border-radius:5px; float:left">
+		<p class="details">Name:</p>
+		<p class="details">Address:</p>
+		<p class="details">Email:</p>
+		<p class="details">Phone no:</p>
+	</div>
+	<div>
+		<div id="contDisplay" style="width:350px;float:left; id">
+			<h4>Contacts</h4>
+		</div>
+		<div style="width:350px; float:right;">
+			<form>
+				<p>Name:<input type="text" id="name"></p>
+				<p>Address:<input type="text" id="address"></p>
+				<p>Email:<input type="text" id="email"></p>
+				<p>Phone no:<input type="text" id="number"></p>
+				<br>
+				<p><input type="button" value="Save" id="button"></p>
+			</form>
+		</div>
+
+	</div>
+	<script type="text/javascript">
+		let $name = document.getElementById('name');
+		let $address = document.getElementById('address');
+		let $email = document.getElementById('email');
+		let $phone = document.getElementById('number');
+		let displayInfo = document.getElementsByClassName('details');
+		let contacts = document.getElementsByClassName('contact'); 
+
+		let btn = document.getElementById('button');
+		let displayContact = document.getElementById('contDisplay');
+		let $list = [];
+
+		btn.onclick = function(){
+			let pTag = createElem(displayContact,'p');
+			$list.push({Name:$name.value,Address:$address.value,Email:$email.value,Number:$phone.value});
+			pTag.innerHTML = $list[$list.length-1].Name;
+			pTag.title = 'Click to View More Info';
+			pTag.className = 'contact';
+
+			for(let i = 0; i < contacts.length; i++){
+				contacts[i].onclick = view;
+			}
+		}
+		function createElem(parent,elem){		
+			let createdTag = document.createElement(elem);
+			parent.appendChild(createdTag);
+			return createdTag;
+		}
+
+		function view(e){
+		let tag = e.target;
+		let caseSense = tag.innerHTML.toLowerCase();
+	    arr = $list.filter(function(a){ 
+			a = a.Name.toLowerCase();
+			return a == caseSense}
+			);
+	    let objName = ['Name','Address','Email','Number'];
+	    for(let i = 0; i < displayInfo.length; i++){
+	    	displayInfo[i].innerHTML = objName[i]+': '+arr[0][objName[i]];
+	    }
+	}
+	</script>
+
+</body>
+</html>
